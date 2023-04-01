@@ -1,0 +1,26 @@
+---
+title: "SEASONAL MOVING AVERAGE SMOOTHING"
+author: "NEHA RANJAN 2248139"
+date: "2023-03-27"
+output: word_document
+---
+```{r}
+library(dplyr)
+aq=AirPassengers
+aq_ts=ts(aq,start=1949,end=1961,freq=12)
+ts.plot(aq_ts)
+aqlog=log(aq_ts)
+library(tseries)
+library(forecast)
+#moving average method
+ma1=ma(aqlog,order=3)
+ts.plot(ma1,main="Moving average smoothing 1")
+ma3=ma(aqlog,order=5)
+ts.plot(ma3,main="Moving average smoothing 2")
+ma3=ma(aqlog,order=7)
+ts.plot(ma3,main="Moving average smoothing 3")
+error=aqlog-ma1
+
+
+```
+
