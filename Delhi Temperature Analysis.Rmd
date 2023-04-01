@@ -1,0 +1,38 @@
+---
+title: "Time Series Data Analysis"
+author: "NEHA RANJAN 2248139"
+date: "2023-03-10"
+output: word_document
+---
+
+```{r}
+#importing the data
+delhitemp=read.csv(file.choose())
+colnames(delhitemp)=c("meantemp")
+delhitemp
+dim(delhitemp)
+attach(delhitemp)
+temp_ts=ts(meantemp,start=2017,freq=365)
+temp_ts
+ts.plot(temp_ts,main="Ts plot")# our dataset is not stationary
+library(tseries)
+adf.test(temp_ts)
+#it can be additive or multiplicative 
+#it is additive data
+#it has ups and downs in each cycle
+#WE check the acf curve next
+acf(temp_ts,main="acf plot")
+#to get proper access in x axis
+
+library(forecast)
+Acf(temp_ts,main="Acf plot")
+log_ts_data <- log(temp_ts)
+log_ts_data
+acf(log_ts_data,main="lograthmic ts plot")
+
+par(mfrow=c(1,2))
+acf(temp_ts,main="acf plot")
+acf(log_ts_data,main="lograthmic ts plot")
+
+```
+
