@@ -1,0 +1,91 @@
+---
+title: "Transformation of non stationary time series data to stationary"
+author: "NEHA RANJAN 2248139"
+date: "2023-03-17"
+output: word_document
+---
+
+```{r}
+library(forecast)
+library(tseries)
+library(astsa)
+library(tseries)
+os_ts=gtemp_ocean
+ts.plot(gtemp_ocean)
+#method of differencing
+
+newos=diff(os_ts)
+acf(newos,main="method of differencing")
+#loss of one observation
+length(os_ts)
+length(newos)
+#ols method
+t=seq(1:length(os_ts))
+t
+
+trd=lm(os_ts~t)
+summary(trd)
+err=residuals.lm(trd)
+ts.plot(err,main="order=1")
+acf(err,main="order=1")
+par(mfrow=c(2,2))
+trd1=lm(os_ts~t+I(t^2))
+trd1
+err1=residuals.lm(trd1)
+ts.plot(err1,main="order=2")
+acf(err1,main="order=2")
+
+trd2=lm(os_ts~t+I(t^2)+I(t^3))
+trd2
+err2=residuals.lm(trd2)
+ts.plot(err2,main="order=3")
+acf(err2,main="order=3")
+
+trd3=lm(os_ts~t+I(t^2)+I(t^3)+I(t^4))
+trd3
+err3=residuals.lm(trd3)
+ts.plot(err3,main="order=4")
+acf(err3,main="order=4")
+
+#Method of moving average
+ma1=ma(os_ts,order=3)
+
+ts.plot(ma1)
+
+ma2=ma(os_ts,order=5)
+
+ts.plot(ma2)
+
+ma3=ma(os_ts,order=7)
+
+ts.plot(ma3)
+
+ma4=ma(os_ts,order=9)
+
+ts.plot(ma4)
+
+ma5=ma(os_ts,order=11)
+
+ts.plot(ma5)
+
+#smoother
+error1=os_ts-ma1
+ts.plot(error1)
+length(error1)
+#remove 1st and last observation
+newerror1=error1[-1]
+newerror2=newerror1[-141]
+#or newerror1=error[c(-1,-136)]
+newerror2
+adf.test(newerror2)
+#order 3 gives us the stationary version . Hence stop the process.
+
+
+
+
+
+
+
+
+```
+
