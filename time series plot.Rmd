@@ -1,0 +1,33 @@
+---
+title: "Time Series Practical-1"
+author: "NEHA RANJAN 2248139"
+date: "2023-03-03"
+output: word_document
+---
+
+```{r}
+#importing the data
+closing=read.csv(file.choose())
+colnames(closing)=c("Date","close")
+closing
+attach(closing)
+closing_ts=ts(close,start=1991,end=2005,freq=12)
+closing_ts
+ts.plot(closing_ts,main="Ts plot")# our dataset is not stationary
+library(tseries)
+adf.test(closing_ts)
+#it can be additive or multiplicative 
+#it is additive data
+#it has ups and downs in  each cycle
+#WE check the acf curve next
+acf(closing_ts,main="acf plot")
+#to get proper access in x axis
+
+library(forecast)
+Acf(closing_ts,main="Acf plot")
+log_ts_data <- log(closing_ts)
+log_ts_data
+acf(log_ts_data,main="lograthmic ts plot")
+
+```
+
